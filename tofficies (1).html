@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tofficies — Toffu Pineapple Cookies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream: #f6ecd6;
+    --cream-deep: #efe0bd;
+    --coffee: #2b1a0f;
+    --coffee-soft: #4a3520;
+    --caramel: #8b5a2b;
+    --gold: #c89b3c;
+    --gold-bright: #e8b94b;
+    --leaf: #6b8f47;
+    --leaf-deep: #4f6b34;
+    --paper: #fffaf0;
+    --shadow: rgba(43, 26, 15, 0.18);
+    --radius: 22px;
+    --serif: "Fraunces", serif;
+    --sans: "Manrope", sans-serif;
+    --mono: "JetBrains Mono", monospace;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family: var(--sans);
+    background: var(--cream);
+    color: var(--coffee);
+    overflow-x:hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+  section{ position:relative; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+  .eyebrow{
+    font-family: var(--mono); font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
+    color: var(--caramel); font-weight:700;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position: sticky; top:0; z-index:100;
+    background: linear-gradient(180deg, var(--coffee) 0%, #3a2413 60%, var(--caramel) 100%);
+    box-shadow: 0 6px 24px var(--shadow);
+  }
+  .nav{
+    max-width:1180px; margin:0 auto; padding:18px 32px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px;
+  }
+  .brand{ display:flex; align-items:center; gap:14px; flex-shrink:0; }
+  .brand svg{ width:46px; height:46px; }
+  .brand-name{
+    font-family: var(--serif); font-weight:800; font-size:26px; letter-spacing:0.06em;
+    color: var(--gold-bright);
+  }
+  .nav-links{ display:flex; gap:34px; list-style:none; }
+  .nav-links a{
+    font-weight:600; font-size:15px; color: var(--cream);
+    position:relative; padding:6px 0;
+  }
+  .nav-links a::after{
+    content:""; position:absolute; left:0; bottom:0; width:0; height:2px;
+    background: var(--gold-bright); transition:width .3s ease;
+  }
+  .nav-links a:hover::after{ width:100%; }
+  .search-pill{
+    flex:1; max-width:340px; display:flex; align-items:center; gap:10px;
+    background: var(--paper); border-radius:999px; padding:10px 16px;
+  }
+  .search-pill input{ border:none; outline:none; background:none; font-family:var(--sans); font-size:14px; width:100%; }
+  @media (max-width: 980px){
+    .nav-links, .search-pill{ display:none; }
+  }
+  .search-pill input{ border:none; outline:none; background:none; font-family:var(--sans); font-size:14px; width:100%; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding: 64px 0 40px;
+    position:relative;
+    background: radial-gradient(circle at 85% 10%, rgba(232,185,75,0.35), transparent 55%), var(--cream);
+    overflow:hidden;
+  }
+  .crumb{ margin-bottom:18px; opacity:0; animation: fadeUp .7s ease forwards .1s; }
+  .crumb span{ color: var(--coffee); opacity:0.55; }
+
+  .hero-title{
+    font-family: var(--serif); font-weight:900; font-size: clamp(40px, 7vw, 92px);
+    line-height:0.98; letter-spacing:-0.01em;
+    background: linear-gradient(100deg, var(--coffee) 20%, var(--caramel) 55%, var(--gold) 80%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    max-width: 900px;
+    opacity:0; animation: fadeUp .8s ease forwards .25s;
+  }
+  .hero-sub{
+    font-size: clamp(17px, 2vw, 21px); color: var(--coffee-soft); max-width:560px; margin-top:18px;
+    font-style: italic; font-family: var(--serif); font-weight:500;
+    opacity:0; animation: fadeUp .8s ease forwards .4s;
+  }
+  .hero-actions{ display:flex; gap:16px; margin-top:34px; flex-wrap:wrap; opacity:0; animation: fadeUp .8s ease forwards .55s; }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:10px; font-weight:700; font-size:15px;
+    padding:15px 28px; border-radius:999px; cursor:pointer; border:2px solid transparent;
+    transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+  }
+  .btn-primary{ background: var(--coffee); color: var(--gold-bright); }
+  .btn-primary:hover{ transform: translateY(-3px); box-shadow: 0 12px 24px var(--shadow); }
+  .btn-ghost{ border-color: var(--coffee); color: var(--coffee); }
+  .btn-ghost:hover{ background: var(--coffee); color: var(--cream); transform: translateY(-3px); }
+
+  .hero-stage{
+    margin-top: 56px; position:relative; display:grid; grid-template-columns: 1.05fr 0.95fr; gap:0;
+    align-items:center;
+  }
+  .price-tag{
+    position:absolute; top:-26px; left:0; z-index:5;
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold) 60%, #a97a2c);
+    color: var(--coffee); font-family: var(--serif); font-weight:900; font-size: 30px;
+    padding: 20px 30px 20px 40px; border-radius: 4px 18px 18px 4px;
+    box-shadow: 0 14px 28px var(--shadow);
+    transform-origin: top left;
+    animation: swing 4.5s ease-in-out infinite;
+  }
+  .price-tag::before{
+    content:""; position:absolute; left:-13px; top:50%; width:26px; height:26px; margin-top:-13px;
+    background: var(--paper); border-radius:50%; border: 3px solid var(--coffee);
+  }
+  .price-tag small{ display:block; font-family: var(--mono); font-size:11px; font-weight:700; letter-spacing:.08em; }
+
+  @keyframes swing{
+    0%,100%{ transform: rotate(-3deg); }
+    50%{ transform: rotate(2deg); }
+  }
+  @keyframes fadeUp{
+    from{ opacity:0; transform: translateY(22px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  .cookie-visual{
+    position:relative; width:100%; aspect-ratio:1/1; max-width:620px; margin: 0 auto;
+  }
+  /* photo frame for code-driven gallery */
+  .photo-main{ position:relative; width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
+  .photo-frame{
+    width:100%; height:100%; border-radius:24px; overflow:hidden; transform: rotate(0deg);
+    box-shadow: 0 28px 72px rgba(43,26,15,0.24); background: linear-gradient(180deg, #fffaf0, #f6ecd6);
+    transition: transform .28s ease, box-shadow .28s ease;
+    position:relative;
+  }
+  .photo-frame img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .photo-frame .caption{ position:absolute; left:12px; bottom:12px; background:rgba(0,0,0,0.55); color:#fff; padding:10px 14px; border-radius:12px; font-size:14px; }
+  .gallery-arrow{ position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.95); border:none; width:42px; height:42px; border-radius:12px; cursor:pointer; font-size:22px; display:flex; align-items:center; justify-content:center; box-shadow:0 10px 22px rgba(0,0,0,0.14); }
+  .gallery-arrow.left{ left:14px; }
+  .gallery-arrow.right{ right:14px; }
+  .gallery-indicator{ position:absolute; top:14px; right:14px; background:rgba(0,0,0,0.6); color:#fff; padding:8px 12px; border-radius:12px; font-size:13px; }
+  
+  /* crumb / decorative floats */
+  .crumbfloat{ position:absolute; border-radius:50%; background: var(--coffee); opacity:0.85; animation: drift 7s ease-in-out infinite; }
+  @keyframes drift{
+    0%,100%{ transform: translateY(0) rotate(0deg); }
+    50%{ transform: translateY(-18px) rotate(20deg); }
+  }
+
+  .info-cards{ display:flex; flex-direction:column; gap:16px; padding-left: 24px; }
+  .info-card{
+    background: var(--paper); border-radius:16px; padding:16px 20px; display:flex; gap:14px; align-items:center;
+    box-shadow: 0 8px 20px var(--shadow);
+    transform: translateX(40px); opacity:0;
+  }
+  @media (max-width: 920px){
+    .hero-stage{ display:grid; grid-template-columns:1fr; gap:40px; align-items:flex-start; }
+    .cookie-visual{ max-width:100%; }
+    .photo-main{ width:100%; height:auto; }
+    .photo-frame{ min-height:360px; }
+    .info-cards{ padding-left:0; }
+    .gallery-arrow{ width:38px; height:38px; font-size:20px; }
+    .gallery-indicator{ top:10px; right:10px; padding:6px 10px; font-size:12px; }
+  }
+  .info-card svg{ width:30px; height:30px; flex-shrink:0; color: var(--leaf-deep); }
+  .info-card strong{ display:block; font-size:14px; }
+  .info-card span{ font-size:12.5px; color: var(--coffee-soft); }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{ opacity:0; transform: translateY(36px); transition: opacity .75s ease, transform .75s ease; }
+  .reveal.visible{ opacity:1; transform: translateY(0); }
+  .reveal-stagger.visible .stagger-item{ opacity:1; transform: translateY(0); }
+  .stagger-item{ opacity:0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+
+  /* ---------- Section heading pattern ---------- */
+  .section-head{ max-width:640px; margin-bottom:48px; }
+  .section-head h2{
+    font-family: var(--serif); font-weight:800; font-size: clamp(30px,4vw,46px); margin-top:10px; color: var(--coffee);
+  }
+  .section-head p{ margin-top:14px; color: var(--coffee-soft); font-size:16px; line-height:1.6; }
+
+  /* ---------- TRANSFORM (signature) ---------- */
+  .transform-section{ padding: 100px 0; background: var(--coffee); color: var(--cream); overflow:hidden; }
+  .transform-section .eyebrow{ color: var(--gold-bright); }
+  .transform-section .section-head h2{ color: var(--paper); }
+  .transform-section .section-head p{ color: #d9c8a8; }
+
+  .flow{
+    display:grid; grid-template-columns: 1fr 120px 1fr 120px 1fr; align-items:center; gap:0;
+    margin-top: 30px;
+  }
+  .flow-node{
+    background: rgba(255,255,255,0.04); border:1px solid rgba(232,185,75,0.28); border-radius:20px;
+    padding: 28px 22px; text-align:center; backdrop-filter: blur(2px);
+    transition: transform .35s ease, border-color .35s ease, background .35s ease;
+  }
+  .flow-node:hover{ transform: translateY(-8px); border-color: var(--gold-bright); background: rgba(255,255,255,0.07); }
+  .flow-node .icon{ width:64px; height:64px; margin:0 auto 16px; }
+  .flow-node h3{ font-family: var(--serif); font-size:19px; font-weight:700; color: var(--gold-bright); }
+  .flow-node p{ font-size:13px; color: #cbb98f; margin-top:8px; line-height:1.5; }
+  .flow-node.result{ border-color: var(--leaf); background: rgba(107,143,71,0.14); }
+  .flow-node.result h3{ color: #b7d99a; }
+
+  .flow-arrow{ display:flex; align-items:center; justify-content:center; }
+  .flow-arrow svg{ width:100%; height:34px; overflow:visible; }
+  .flow-arrow path.track{ stroke: rgba(232,185,75,0.25); stroke-width:2; fill:none; stroke-dasharray:6 8; }
+  .flow-arrow path.pulse{ stroke: var(--gold-bright); stroke-width:2.5; fill:none; stroke-dasharray:10 220; stroke-dashoffset:0; animation: flowmove 2.6s linear infinite; }
+  @keyframes flowmove{ to{ stroke-dashoffset:-230; } }
+
+  @media (max-width: 880px){
+    .flow{ grid-template-columns: 1fr; gap:18px; }
+    .flow-arrow{ transform: rotate(90deg); height:40px; }
+  }
+
+  /* ---------- KOMPOSISI ---------- */
+  .komposisi{ padding: 100px 0; }
+  .ingredient-grid{ display:grid; grid-template-columns: repeat(4, 1fr); gap:20px; }
+  .ingredient-card{
+    background: var(--paper); border-radius:18px; padding:26px 20px; text-align:center;
+    box-shadow: 0 8px 22px var(--shadow); border:1px solid var(--cream-deep);
+    transition: transform .3s ease, box-shadow .3s ease;
+    cursor: pointer;
+  }
+  .ingredient-card:hover{ transform: translateY(-8px) rotate(-1deg); box-shadow: 0 18px 32px var(--shadow); }
+  .ingredient-card.active{ border-color: var(--gold-bright); box-shadow: 0 20px 36px var(--shadow); transform: translateY(-10px) rotate(-1deg); }
+  .ingredient-card .ic{
+    width:56px; height:56px; margin:0 auto 14px; border-radius:50%;
+    background: linear-gradient(135deg, var(--gold-bright), var(--caramel));
+    display:flex; align-items:center; justify-content:center; color: var(--paper);
+  }
+  .ingredient-card h4{ font-family: var(--serif); font-weight:700; font-size:16px; }
+  .ingredient-card p{ font-size:12.5px; color: var(--coffee-soft); margin-top:6px; line-height:1.5; }
+  @media (max-width: 900px){ .ingredient-grid{ grid-template-columns: repeat(2,1fr); } }
+
+  /* ---------- KANDUNGAN GIZI ---------- */
+  .gizi{ padding: 100px 0; background: var(--cream-deep); }
+  .gizi-layout{ display:grid; grid-template-columns: 1fr 1fr; gap:60px; align-items:start; }
+
+  .nutrition-label{
+    background: var(--paper); border: 3px solid var(--coffee); border-radius:6px; padding:24px 26px;
+    font-family: var(--mono); max-width: 420px;
+    box-shadow: 10px 10px 0 var(--gold);
+  }
+  .nutrition-label h3{ font-family: var(--serif); font-size:30px; border-bottom: 10px solid var(--coffee); padding-bottom:6px; }
+  .nutrition-label .serv{ display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--coffee); font-size:13px; font-weight:700; }
+  .n-row{ display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid #d8c8a0; font-size:13px; }
+  .n-row.thick{ border-bottom: 5px solid var(--coffee); font-weight:700; font-size:15px; }
+  .n-row .bar-wrap{ flex:1; height:8px; background:#e5d7b3; border-radius:6px; margin:0 12px; overflow:hidden; }
+  .n-row .bar{ height:100%; width:0%; background: linear-gradient(90deg, var(--leaf-deep), var(--leaf)); border-radius:6px; transition: width 1.4s cubic-bezier(.2,.9,.25,1); }
+  .n-row .val{ font-weight:700; white-space:nowrap; }
+
+  .gizi-copy .stat-row{ display:flex; gap:26px; margin-top:30px; flex-wrap:wrap; }
+  .stat{ min-width:120px; }
+  .stat b{ font-family: var(--serif); font-size: 34px; color: var(--leaf-deep); display:block; }
+  .stat span{ font-size:12.5px; color: var(--coffee-soft); }
+
+  @media (max-width: 880px){ .gizi-layout{ grid-template-columns:1fr; } }
+
+  /* ---------- KONTAK ---------- */
+  .kontak{ padding: 110px 0 90px; background: var(--coffee); color: var(--cream); text-align:center; position:relative; overflow:hidden; }
+  .kontak .section-head{ margin:0 auto 30px; }
+  .kontak .section-head h2{ color: var(--paper); }
+  .kontak .section-head p{ color:#d9c8a8; margin-left:auto; margin-right:auto; }
+  .kontak-btns{ display:flex; justify-content:center; gap:18px; flex-wrap:wrap; margin-top:8px; }
+  .kontak-info{ display:flex; justify-content:center; gap:44px; margin-top:56px; flex-wrap:wrap; color:#cbb98f; font-size:14px; }
+  .kontak-info strong{ display:block; color: var(--gold-bright); font-family: var(--serif); font-size:16px; margin-bottom:4px; }
+
+  footer{ background:#1c1108; color:#8a7357; text-align:center; padding:26px; font-size:12.5px; font-family: var(--mono); }
+
+  /* whatsapp floating button */
+  .fab-wa{
+    position:fixed; bottom:26px; right:26px; z-index:200;
+    width:58px; height:58px; border-radius:50%; background:#25D366; color:#fff;
+    display:flex; align-items:center; justify-content:center; box-shadow: 0 10px 24px rgba(0,0,0,0.3);
+    animation: pop 2.4s ease-in-out infinite;
+  }
+  @keyframes pop{ 0%,100%{ transform: scale(1); } 50%{ transform: scale(1.08); } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="brand">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="28" fill="#e8b94b" stroke="#2b1a0f" stroke-width="3"/>
+        <circle cx="22" cy="24" r="3.4" fill="#2b1a0f"/>
+        <circle cx="38" cy="20" r="2.6" fill="#2b1a0f"/>
+        <circle cx="42" cy="36" r="3" fill="#2b1a0f"/>
+        <circle cx="26" cy="42" r="2.8" fill="#2b1a0f"/>
+        <circle cx="18" cy="38" r="2.2" fill="#2b1a0f"/>
+      </svg>
+      <span class="brand-name">TOFFICIES</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#produk">Produk</a></li>
+      <li><a href="#komposisi">Komposisi</a></li>
+      <li><a href="#gizi">Kandungan Gizi</a></li>
+      <li><a href="#kontak">Kontak</a></li>
+    </ul>
+    <div class="search-pill">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8b5a2b" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
+      <input type="text" placeholder="Cari produk...">
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="produk">
+  <div class="wrap">
+    <p class="crumb eyebrow">Beranda <span>/</span> Toffu Pineapple Cookies</p>
+    <h1 class="hero-title">TOFFU PINEAPPLE<br>COOKIES</h1>
+    <p class="hero-sub">Cookies sehat berbahan dasar ampas tahu dan kulit nanas — renyah di luar, lembut di dalam, dan harga nya murah.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="https://wa.me/6285646669780?text=Halo%20Tofficies%2C%20saya%20ingin%20memesan%20Toffu%20Pineapple%20Cookies." target="_blank" rel="noopener noreferrer">Pesan via WhatsApp</a>
+      <a class="btn btn-ghost" href="#komposisi">Lihat Komposisi</a>
+    </div>
+
+    <div class="hero-stage">
+      <div class="cookie-visual" id="cookieVisual">
+        <div class="price-tag">Rp6.000<small>/ 2 Pcs </small></div>
+
+        <div class="photo-main" id="photoMain">
+          <div class="photo-frame" id="photoFrame">
+            <img id="mainPhotoImg" alt="Foto produk Toffu Pineapple Cookies">
+            <div class="caption" id="photoCaption">Tofficies — Toffu Pineapple Cookies</div>
+            <div class="gallery-indicator" id="galIndicator">0 / 0</div>
+          </div>
+          <button class="gallery-arrow left" id="galPrev" aria-label="Foto sebelumnya">‹</button>
+          <button class="gallery-arrow right" id="galNext" aria-label="Foto berikutnya">›</button>
+        </div>
+      </div>
+      <div class="info-cards">
+        <div class="info-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M6 8c0-3 2-5 6-5s6 2 6 5-6 6-6 6-6-3-6-6z"/></svg>
+          <div><strong>Bahan Upcycled</strong><span>Dari limbah tahu &amp; nanas jadi camilan bergizi</span></div>
+        </div>
+        <div class="info-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V4h8v3"/></svg>
+          <div><strong>Tinggi Serat &amp; Protein</strong><span>Cocok jadi camilan sehat harian</span></div>
+        </div>
+        <div class="info-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12l5 5L20 6"/></svg>
+          <div><strong>Tanpa Pengawet</strong><span>Dipanggang segar, siap kirim hari yang sama</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="transform-section reveal">
+  <div class="wrap">
+    <p class="eyebrow">Filosofi Produk</p>
+    <div class="section-head">
+      <h2>Dari Limbah, Jadi Berkah</h2>
+      <p>Mengubah ampas tahu dan kulit nanas menjadi lebih dari sekadar camilan. TOFFICIES menghadirkan soft cookies yang lembut, kaya serat, lezat, dan mendukung gaya hidup berkelanjutan.</p>
+    </div>
+    <div class="flow reveal-stagger">
+      <div class="flow-node stagger-item">
+        <svg class="icon" viewBox="0 0 64 64" fill="none"><rect x="10" y="18" width="44" height="30" rx="6" fill="#e8b94b" stroke="#2b1a0f" stroke-width="2.5"/><path d="M10 26h44" stroke="#2b1a0f" stroke-width="2"/></svg>
+        <h3>Ampas Tahu</h3>
+        <p>Sisa produksi tahu, kaya protein nabati &amp; masih layak olah.</p>
+      </div>
+      <div class="flow-arrow"><svg viewBox="0 0 120 34"><path class="track" d="M0 17 H120"/><path class="pulse" d="M0 17 H120"/></svg></div>
+      <div class="flow-node stagger-item">
+        <svg class="icon" viewBox="0 0 64 64" fill="none"><path d="M12 40c8-24 32-24 40 0" stroke="#2b1a0f" stroke-width="3" fill="#e8b94b"/><path d="M28 14c2 4 2 8 0 10" stroke="#6b8f47" stroke-width="3"/></svg>
+        <h3>Kulit Nanas</h3>
+        <p>Kaya serat &amp; vitamin C, yang beraroma segar.</p>
+      </div>
+      <div class="flow-arrow"><svg viewBox="0 0 120 34"><path class="track" d="M0 17 H120"/><path class="pulse" d="M0 17 H120"/></svg></div>
+      <div class="flow-node result stagger-item">
+        <svg class="icon" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="24" fill="#e8b94b" stroke="#2b1a0f" stroke-width="2.5"/><circle cx="24" cy="26" r="2.6" fill="#2b1a0f"/><circle cx="38" cy="24" r="2" fill="#2b1a0f"/><circle cx="40" cy="36" r="2.4" fill="#2b1a0f"/><circle cx="26" cy="40" r="2" fill="#2b1a0f"/></svg>
+        <h3>Toffu Pineapple Cookies</h3>
+        <p>Camilan renyah, rendah limbah, dan tinggi manfaat.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="komposisi" id="komposisi">
+  <div class="wrap">
+    <p class="eyebrow reveal">Komposisi</p>
+    <div class="section-head reveal">
+      <h2>Bahan yang Kami Pakai</h2>
+      <p>Setiap bahan dipilih untuk menyeimbangkan rasa, tekstur, dan nilai gizi — tanpa bahan pengawet tambahan.</p>
+    </div>
+    <div class="ingredient-grid reveal-stagger">
+      <div class="ingredient-card stagger-item" data-img="images/ingredients/tepung-ampas-tahu.jpg"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/></svg></div><h4>Tepung Ampas Tahu</h4><p>Sumber protein nabati utama pengganti sebagian tepung terigu.</p></div>
+      <div class="ingredient-card stagger-item" data-img="images/ingredients/tepung-kulit-nanas.jpg"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M4 20c8-22 32-22 40 0" stroke-width="2"/></svg></div><h4>Tepung Kulit Nanas</h4><p>Menambah serat dan aroma manis alami khas tropis.</p></div>
+      <div class="ingredient-card stagger-item" data-img="images/ingredients/dark-choc-chips.jpg"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg></div><h4>Dark Choc Chips</h4><p>Memberi rasa manis pahit yang seimbang di tiap gigitan.</p></div>
+      <div class="ingredient-card stagger-item" data-img="images/ingredients/tropicana-slim.jpg"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 3c4 5 7 8 7 12a7 7 0 1 1-14 0c0-4 3-7 7-12z"/></svg></div><h4>Tropicana Slim</h4><p>Pemanis alami dengan indeks kalori rendah/0.</p></div>
+      <div class="ingredient-card stagger-item" data-img="images/ingredients/butter.jpg"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="6" y="3" width="12" height="18" rx="6"/></svg></div><h4>Butter</h4><p>Memberi aroma gurih serta tekstur renyah di luar, lembut di dalam.</p></div>
+      <div class="ingredient-card stagger-item" data-img="images/ingredients/telur.jpg"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><ellipse cx="12" cy="12" rx="8" ry="6"/></svg></div><h4>Telur</h4><p>Pengikat adonan agar cookies tetap padu saat dipanggang.</p></div>
+      <div class="ingredient-card stagger-item" data-img="images/ingredients/baking-soda.jpg"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg></div><h4>Baking Soda</h4><p>Membantu adonan mengembang sempurna saat dipanggang.</p></div>
+      <div class="ingredient-card stagger-item" data-img="images/ingredients/vanili.jpg"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 3l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z"/></svg></div><h4>Vanili</h4><p>Sentuhan aroma hangat yang menyempurnakan rasa akhir.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="gizi" id="gizi">
+  <div class="wrap gizi-layout">
+    <div class="nutrition-label reveal">
+      <h3>Kandungan Gizi</h3>
+      <div class="serv"><span>Takaran saji</span><span>1 keping (35g)</span></div>
+      <div class="n-row thick"><span>Energi Total</span><span class="val">142 kkal</span></div>
+      <div class="n-row" data-pct="34"><span>Protein</span><div class="bar-wrap"><div class="bar"></div></div><span class="val">4.8 g</span></div>
+      <div class="n-row" data-pct="58"><span>Lemak Total</span><div class="bar-wrap"><div class="bar"></div></div><span class="val">7.2 g</span></div>
+      <div class="n-row" data-pct="70"><span>Karbohidrat</span><div class="bar-wrap"><div class="bar"></div></div><span class="val">15.6 g</span></div>
+      <div class="n-row" data-pct="45"><span>Serat Pangan</span><div class="bar-wrap"><div class="bar"></div></div><span class="val">2.9 g</span></div>
+      <div class="n-row" data-pct="30"><span>Gula</span><div class="bar-wrap"><div class="bar"></div></div><span class="val">4.1 g</span></div>
+      <div class="n-row" data-pct="20"><span>Vitamin C</span><div class="bar-wrap"><div class="bar"></div></div><span class="val">10 mg</span></div>
+      <div class="n-row" data-pct="15"><span>Natrium</span><div class="bar-wrap"><div class="bar"></div></div><span class="val">45 mg</span></div>
+    </div>
+    <div class="gizi-copy reveal">
+      <p class="eyebrow">Kandungan Gizi</p>
+      <div class="section-head" style="margin-top:10px;">
+        <h2>Camilan Bergizi, Bukan Sekadar Enak</h2>
+        <p>Dibandingkan cookies pada umumnya, Toffu Pineapple Cookies menawarkan protein dan serat lebih tinggi berkat substitusi tepung dari ampas tahu dan kulit nanas.</p>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><b>+38%</b><span>Serat dibanding cookies biasa</span></div>
+        <div class="stat"><b>+22%</b><span>Protein nabati per porsi</span></div>
+        <div class="stat"><b>0</b><span>Bahan pengawet tambahan</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="kontak" id="kontak">
+  <div class="wrap">
+    <p class="eyebrow reveal">Kontak</p>
+    <div class="section-head reveal">
+      <h2>Pesan Toffu Pineapple Cookies</h2>
+      <p>Tersedia untuk pemesanan harian. Hubungi kami langsung untuk info stok dan pengiriman.</p>
+    </div>
+    <div class="kontak-btns reveal">
+      <a class="btn btn-primary" href="https://wa.me/6285646669780?text=Halo%20Tofficies%2C%20saya%20ingin%20bertanya%20tentang%20produk." target="_blank" rel="noopener noreferrer" style="background:#25D366; color:#fff;">Chat WhatsApp</a>
+    </div>
+    <div class="kontak-info reveal">
+      <div><strong>Jam Operasional</strong>Setiap hari, 08.00 – 20.00</div>
+      <div><strong>Area Pengiriman</strong>Kota &amp; sekitarnya</div>
+      <div><strong>Metode Pesan</strong>WhatsApp &amp; Instagram</div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 TOFFICIES — Cookies dari limbah, penuh berkah.</footer>
+
+<a class="fab-wa" href="https://wa.me/6285646669780?text=Halo%20Tofficies%2C%20saya%20ingin%20bertanya%20lebih%20lanjut." target="_blank" rel="noopener noreferrer" aria-label="Chat WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.6 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.7-1.2-4.4-3.9-4.6-4.1-.1-.2-1.1-1.4-1.1-2.7 0-1.3.7-1.9.9-2.2.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.5.7 1.8.8 1.9.1.1.1.3 0 .5-.1.2-.1.3-.3.5l-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.5 1.5.3.1.5.1.6-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.6-.1.2.1 1.5.7 1.8.8.3.1.4.2.5.3.1.2.1.9-.1 1.5z"/></svg>
+</a>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        if (entry.target.classList.contains('gizi') || entry.target.querySelector?.('.bar')) {}
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.18 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Nutrition bars animate when label visible
+  const label = document.querySelector('.nutrition-label');
+  const barIo = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        document.querySelectorAll('.n-row[data-pct]').forEach(row => {
+          const pct = row.getAttribute('data-pct');
+          const bar = row.querySelector('.bar');
+          requestAnimationFrame(() => { bar.style.width = pct + '%'; });
+        });
+        barIo.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  if (label) barIo.observe(label);
+
+  // Floating crumbs in hero
+  const visual = document.getElementById('cookieVisual');
+  const colors = ['#8b5a2b', '#c89b3c', '#4a3520'];
+  for (let i = 0; i < 6; i++) {
+    const c = document.createElement('div');
+    c.className = 'crumbfloat';
+    const size = 6 + Math.random() * 10;
+    c.style.width = size + 'px';
+    c.style.height = size + 'px';
+    c.style.left = (Math.random() * 90) + '%';
+    c.style.top = (Math.random() * 90) + '%';
+    c.style.background = colors[i % colors.length];
+    c.style.animationDuration = (5 + Math.random() * 4) + 's';
+    c.style.animationDelay = (Math.random() * 3) + 's';
+    visual.appendChild(c);
+  }
+
+  // --- Gallery: code-driven product photos ---
+  let galleryImages = [];
+  let galleryIndex = 0;
+
+  function updateIndicator() {
+    const ind = document.getElementById('galIndicator');
+    if (!ind) return;
+    ind.textContent = (galleryImages.length ? (galleryIndex + 1) : 0) + ' / ' + galleryImages.length;
+  }
+
+  function showIndex(i) {
+    if (!galleryImages || galleryImages.length === 0) return;
+    galleryIndex = (i + galleryImages.length) % galleryImages.length;
+    const img = document.getElementById('mainPhotoImg');
+    const frame = document.getElementById('photoFrame');
+    const caption = document.getElementById('photoCaption');
+    if (!img || !frame) return;
+    img.src = galleryImages[galleryIndex];
+    img.alt = caption ? caption.textContent : ('Foto produk ' + (galleryIndex + 1));
+    img.style.display = 'block';
+    img.onload = () => {
+      // remove any placeholder if present
+      const ph = document.getElementById('mainPhotoPlaceholder'); if (ph) ph.style.display = 'none';
+    };
+    img.onerror = () => {
+      console.warn('Failed to load image:', img.src);
+      img.style.display = 'none';
+      // try a sensible fallback: first gallery image (g1) if exists
+      if (galleryImages[0] && galleryImages[0] !== img.src) {
+        img.src = galleryImages[0];
+        img.style.display = 'block';
+      }
+    };
+    // give each image a slightly different tilt/offset for a unique layout
+    const rotations = [-8, -5, -3, 0, 3, 6, 8];
+    const rot = rotations[galleryIndex % rotations.length];
+    const yOffset = (galleryIndex % 3) * -6; // small vertical shift
+    frame.style.transform = `rotate(${rot}deg) translateY(${yOffset}px)`;
+    updateIndicator();
+  }
+
+  function setGallery(images) {
+    galleryImages = Array.isArray(images) ? images.slice() : [];
+    galleryIndex = 0;
+    showIndex(0);
+  }
+
+  // Try to load a simple numbered pattern from a folder: prefix + index + ext
+  function loadGalleryFromFolder(folderPath, count = 4, prefix = 'img', ext = '.jpg') {
+    const imgs = [];
+    for (let i = 1; i <= count; i++) {
+      imgs.push(`${folderPath.replace(/\/$/, '')}/${prefix}${i}${ext}`);
+    }
+    setGallery(imgs);
+  }
+
+  // wire gallery buttons
+  const prevBtn = document.getElementById('galPrev');
+  const nextBtn = document.getElementById('galNext');
+  if (prevBtn) prevBtn.addEventListener('click', () => { showIndex(galleryIndex - 1); });
+  if (nextBtn) nextBtn.addEventListener('click', () => { showIndex(galleryIndex + 1); });
+
+  // Expose APIs for later manual linking to folder images
+  window.setGallery = setGallery;
+  window.loadGalleryFromFolder = loadGalleryFromFolder;
+
+  // Example: try loading common pattern (edit or call loadGalleryFromFolder from console)
+  // loadGalleryFromFolder('images/products', 4, 'product-', '.jpg');
+  // If you uploaded 4 images at the site root named g1..g4, load them automatically:
+  try {
+    setGallery(['g1.jpeg','g2.jpeg','g3.jpeg','g4.jpeg']);
+  } catch (e) { console.warn('Auto gallery load failed', e); }
+
+  // Ingredient cards are displayed as static composition highlights.
+  document.querySelectorAll('.ingredient-card').forEach(card => {
+    card.style.cursor = 'default';
+  });
+</script>
+</body>
+</html>
